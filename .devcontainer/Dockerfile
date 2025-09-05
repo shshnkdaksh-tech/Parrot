@@ -1,24 +1,25 @@
-# Use the Parrot Security Core base image
-FROM parrotsec/core:latest
+# Base Parrot Security image
+FROM parrotsec/security:latest
 
-# Install basic tools
-RUN apt update && apt install -y \
-    git \
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update and install essential pentest/networking tools
+RUN apt-get update && apt-get install -y \
+    nmap \
+    net-tools \
+    iproute2 \
+    tcpdump \
+    wireshark \
     curl \
-    vim \
+    wget \
+    git \
     python3 \
     python3-pip \
-    net-tools \
     sudo \
-    nmap \
-    hydra \
-    john \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Set bash as default shell
-SHELL ["/bin/bash", "-c"]
-
-# Create a non-root user for Codespaces
-RUN useradd -m codespace && echo "codespace ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-USER codespace
-WORKDIR /home/codespace
+# Set root as default user
+USER root
+WORKDIR /workspace
