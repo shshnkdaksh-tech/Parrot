@@ -1,17 +1,20 @@
 {
-  "name": "Parrot Security Codespace",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": ".."
-  },
-  "settings": {
-    "terminal.integrated.shell.linux": "/bin/bash"
-  },
-  "extensions": [
-    "ms-vscode.cpptools",
-    "ms-python.python",
-    "ms-azuretools.vscode-docker"
-  ],
-  "forwardPorts": [8080, 3000],
-  "postCreateCommand": "sudo apt update && sudo apt install -y nmap hydra john"
+    "name": "Parrot Security Full",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "remoteUser": "root",
+    "runArgs": [
+        "--cap-add=NET_RAW",
+        "--cap-add=NET_ADMIN",
+        "--privileged"
+    ],
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [
+        "ms-python.python",
+        "ms-vscode.cpptools"
+    ],
+    "postCreateCommand": "echo 'Parrot Security DevContainer Ready!'"
 }
